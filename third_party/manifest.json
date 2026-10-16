@@ -1,0 +1,20 @@
+{
+  "edm/LICENSE.txt": "b7249043cca5e5c88f99730ddc40490a3284780dfe423b19f2c75bd5e2a8f03e",
+  "edm/dnnlib/__init__.py": "57a5dd0f58b26c72961c7a64e0a7806c722c6046e06e79ce64ea344b47ecd516",
+  "edm/dnnlib/util.py": "00a0e339dc8eca358c9053ae6d93ab87b8d3f4df1e5dd30d3185558721986e1c",
+  "edm/fid.py": "704be0de2c77c0090fdb9787268360ef9d438ca83c6aca14aa6d4f51dcff364d",
+  "edm/generate.py": "1af4e135d3a17f7cba1e022f22260d4e7534ea525e6162783e00805c53204c2a",
+  "edm/torch_utils/__init__.py": "c206ac297b56e0acc8671f9f93170e3822abc87abcdf5886b65ea326ade8dac8",
+  "edm/torch_utils/distributed.py": "d16a13aaa7c7bfb3b8067404d616cedafe22783ea4aae72169e41b29071d1a2b",
+  "edm/torch_utils/misc.py": "d1b9ccfa41cbb0e232675d49d1875179cb010dbbd2a021584aa5d1614348ac83",
+  "edm/torch_utils/persistence.py": "71589e7a4b5175047a48a4bc58e30438b58bea87e415e6873d13d7d438c44b38",
+  "edm/torch_utils/training_stats.py": "0f16df14740b91a040870e8425dce37014142be7f7016e6871fe19a5585a19c6",
+  "edm/training/__init__.py": "c206ac297b56e0acc8671f9f93170e3822abc87abcdf5886b65ea326ade8dac8",
+  "edm/training/augment.py": "fd411af7c2d74489ce11a245293047369fc044d00a9aeed1c0bd46b322c8a8b5",
+  "edm/training/dataset.py": "f46fe15ecd66206819e416ffca6ea22a06610405d6954ccc0fffc53092ab81c2",
+  "edm/training/loss.py": "b26f0937bc72b18cc5f9869c86035ca9b872138cdfae7994237e9733951e4415",
+  "edm/training/networks.py": "5db27dcd96674b95c72d5e6491b879cdc35e24039ada3411b4b46a28ed1fe284",
+  "edm/training/training_loop.py": "5c88533ce42ea771ec4a55fe060b00aabe30074d1b6f2b85bb4e08c8ea654b65",
+  "k_diffusion_reference/LICENSE": "3c7a8c0d3d734b261407982442206f28d8d43b283ad561d6d9b3afe4c1cb9f7b",
+  "k_diffusion_reference/sampling.py": "adbecfea2f51ee7b1d54fc638a76d5585dc9285b41ab66296be7d0e1f38a58ec"
+}

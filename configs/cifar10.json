@@ -1,0 +1,23 @@
+{
+  "name": "edm-cifar10-uncond-vp-v1",
+  "resolution": 32,
+  "channels": 3,
+  "sigma_min": 0.002,
+  "sigma_max": 80.0,
+  "rho": 7.0,
+  "presets": {"smoke": 16, "screen": 2048, "full": 50000},
+  "assets": {
+    "network": {
+      "filename": "edm-cifar10-32x32-uncond-vp.pkl",
+      "url": "https://nvlabs-fi-cdn.nvidia.com/edm/pretrained/edm-cifar10-32x32-uncond-vp.pkl"
+    },
+    "inception": {
+      "filename": "inception-2015-12-05.pkl",
+      "url": "https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan3/versions/1/files/metrics/inception-2015-12-05.pkl"
+    },
+    "reference": {
+      "filename": "cifar10-32x32.npz",
+      "url": "https://nvlabs-fi-cdn.nvidia.com/edm/fid-refs/cifar10-32x32.npz"
+    }
+  }
+}
