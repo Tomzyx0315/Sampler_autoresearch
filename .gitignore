@@ -6,4 +6,5 @@ __pycache__/
 cache/
 artifacts/
 *.part
-experiments/*/.lock
+experiments/**/*.npz
+experiments/**/*.png

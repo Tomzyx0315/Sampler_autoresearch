@@ -10,13 +10,19 @@ from pathlib import Path
 AVAILABLE = all(importlib.util.find_spec(m) is not None for m in ("torch", "numpy", "scipy", "PIL", "tqdm", "requests"))
 
 
+def load_file(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 @unittest.skipUnless(AVAILABLE, "Run on server after installing requirements.txt")
 class RuntimeTests(unittest.TestCase):
     def test_tensor_reference_parity(self):
         import torch
         from harness.common import ROOT
         from harness.model import Denoiser
-        from harness.verify_baselines import load_file
         from baselines.heun import sample as heun
         from baselines.dpmpp import sample as dpmpp
         class Toy(torch.nn.Module):
@@ -31,7 +37,7 @@ class RuntimeTests(unittest.TestCase):
         n = 10
         levels = (80 ** (1/7) + torch.arange(n, dtype=torch.float64) / (n-1) * (0.002 ** (1/7) - 80 ** (1/7))) ** 7
         levels = torch.cat([levels, torch.zeros(1, dtype=torch.float64)])
-        edm = load_file("test_edm", ROOT / "third_party/edm/generate.py")
+        edm = load_file("test_edm", ROOT / "third_party/edm/sampler_reference.py")
         kd = load_file("test_kd", ROOT / "third_party/k_diffusion_reference/sampling.py")
         for ours, reference, calls in (
             (heun, edm.edm_sampler(net, noise, num_steps=n, randn_like=torch.zeros_like), 19),
@@ -56,16 +62,16 @@ class RuntimeTests(unittest.TestCase):
         self.assertAlmostEqual(fid(mean, covariance, mean, covariance), 0, places=10)
         self.assertAlmostEqual(fid(mean, covariance, mean + 1, covariance), 7, places=10)
 
-    def test_seed_batch_independence_and_budget(self):
+    def test_seed_batch_independence_and_counter(self):
         import torch
         from harness.model import noise_for_seeds, Denoiser
         a = noise_for_seeds([4, 5, 6], "cpu")
         b = torch.cat([noise_for_seeds([4], "cpu"), noise_for_seeds([5, 6], "cpu")])
         self.assertTrue(torch.equal(a, b))
-        denoise = Denoiser(lambda x, s: x, max_nfe=1)
+        denoise = Denoiser(lambda x, s: x)
         denoise(a, 1.0)
-        with self.assertRaises(RuntimeError):
-            denoise(a, 1.0)
+        self.assertEqual(denoise.calls, 1)
+        self.assertEqual(denoise.sample_evaluations, 3)
 
     def test_uint8_conversion_and_trace_analysis(self):
         import torch

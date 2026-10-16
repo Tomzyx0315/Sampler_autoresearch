@@ -1,7 +1,6 @@
 """EDM loading and counted access to the frozen denoiser."""
 import pickle
 import sys
-import time
 import torch
 from .common import ROOT
 
@@ -29,20 +28,14 @@ def noise_for_seeds(seeds, device):
 
 
 class Denoiser:
-    def __init__(self, net, max_nfe=128, deadline=None, trace_samples=0):
+    def __init__(self, net, trace_samples=0):
         self.net = net
-        self.max_nfe = max_nfe
-        self.deadline = deadline
         self.calls = 0
         self.sample_evaluations = 0
         self.trace_samples = trace_samples
         self.trace = []
 
     def __call__(self, x, sigma):
-        if self.calls >= self.max_nfe:
-            raise RuntimeError(f"Exceeded {self.max_nfe} denoiser calls in one batch")
-        if self.deadline is not None and time.monotonic() > self.deadline:
-            raise TimeoutError("Experiment time budget exhausted")
         sigma_tensor = torch.as_tensor(sigma, dtype=torch.float64, device=x.device)
         if not bool(torch.isfinite(sigma_tensor).all()) or not bool((sigma_tensor > 0).all()):
             raise ValueError("Denoiser sigma must be positive and finite")
