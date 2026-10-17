@@ -11,14 +11,15 @@
 
 ## 在服务器运行
 
-推荐 Python 3.11。只在研究服务器安装依赖和下载资产：
+直接复用服务器已有的 Conda 环境；不要为这个 repo 创建 `.venv`，也不要重新安装 CUDA 版 PyTorch。当前配置兼容 Python 3.12 和已有的 PyTorch 2.8 CUDA 环境。首次使用时运行：
 
 ```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements.txt
+python -m harness.doctor
 python -m harness.prepare
 ```
+
+`harness.prepare` 默认直接使用 `/data_fs/zhangyuxuan`：复用 `edm_ckpt/` 中的 EDM checkpoint，并在 `cifar10fid/` 中保存 Inception 和 CIFAR-10 FID reference。大文件不会复制到 repo。资产根目录可用 `SAMPLER_DATA_ROOT` 覆盖，单个文件可用 `SAMPLER_NETWORK_PATH`、`SAMPLER_INCEPTION_PATH` 或 `SAMPLER_REFERENCE_PATH` 覆盖；需要临时本地缓存时再显式传 `--assets`。
 
 采样数量自选，只有加 `--fid` 才计算 FID：
 
@@ -31,7 +32,7 @@ python -m harness.evaluate --steps 10 --num 50000 --fid --seed 100000
 
 `--sampler` 可选 `candidate`（默认）、`dpmpp`、`heun`，或 `模块:函数`。
 可传 `--params '{"key": 1}'` 给自定义算法；`--run 名称` 可指定输出目录名。
-模型在 `cache/assets/`，无需下载 CIFAR-10 原始图片；共享路径用 `--assets`。
+模型和 reference 默认从共享路径解析；当前 FID 流程无需读取 CIFAR-10 原始图片。原始数据位于 `/data_fs/zhangyuxuan/cifar10`，供后续诊断脚本使用。
 
 ## Sampler 接口
 

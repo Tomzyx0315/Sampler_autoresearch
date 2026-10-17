@@ -5,7 +5,7 @@ import importlib
 import json
 from pathlib import Path
 import time
-from .common import ROOT, CONFIG_PATH, read_json, write_json, asset_paths, schedule, git_info
+from .common import ROOT, CONFIG_PATH, read_json, write_json, asset_paths, default_asset_dir, schedule, git_info
 
 SAMPLERS = {"dpmpp": "baselines.dpmpp:sample", "heun": "baselines.heun:sample",
             "candidate": "sampler:sample"}
@@ -21,7 +21,8 @@ def parse_args(argv=None):
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--batch", type=int, default=64)
     p.add_argument("--device", choices=["cuda", "cpu"], default="cuda")
-    p.add_argument("--assets", type=Path, default=ROOT / "cache/assets")
+    p.add_argument("--assets", type=Path, default=default_asset_dir(),
+                   help="Asset root; defaults to the configured shared data directory")
     p.add_argument("--params", type=json.loads, default={})
     p.add_argument("--trace", type=int, default=0, help="Trace first N samples in the first batch")
     args = p.parse_args(argv)

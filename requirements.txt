@@ -1,9 +1,8 @@
-# Install on the research server, not on the laptop.
-# Python 3.10–3.12. Install a suitable PyTorch CUDA wheel first if necessary.
-torch==2.6.0
-numpy==2.2.6
-scipy==1.15.3
-Pillow==11.2.1
-requests==2.32.5
-tqdm==4.67.1
-setuptools==75.8.0
+# Install into the existing Conda environment. PyTorch is intentionally not
+# listed: keep the CUDA-enabled build already provided by the server.
+numpy>=2.0,<2.8
+scipy>=1.15,<2
+Pillow>=10
+requests>=2.31
+tqdm>=4.66
+setuptools>=68

@@ -39,7 +39,14 @@ class FeatureStats:
 
 
 def fid(mean, covariance, reference_mean, reference_covariance):
-    root, _ = scipy.linalg.sqrtm(covariance @ reference_covariance, disp=False)
+    # SciPy <=1.16 returns ``(root, error)`` when disp=False; newer SciPy
+    # removed that argument and returns the matrix directly.
+    try:
+        root = scipy.linalg.sqrtm(covariance @ reference_covariance, disp=False)
+    except TypeError:
+        root = scipy.linalg.sqrtm(covariance @ reference_covariance)
+    if isinstance(root, tuple):
+        root = root[0]
     if not np.isfinite(root).all():
         raise ValueError("Nonfinite covariance square root")
     if np.iscomplexobj(root):

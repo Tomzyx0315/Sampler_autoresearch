@@ -11,7 +11,7 @@ if str(EDM_ROOT) not in sys.path:
 
 
 def load_network(path, device):
-    # Only use the official asset downloaded by prepare; pickle contains Python code.
+    # Only use the official asset resolved by prepare; pickle contains Python code.
     with open(path, "rb") as stream:
         net = pickle.load(stream)["ema"].to(device).eval().requires_grad_(False)
     if (net.img_resolution, net.img_channels, net.label_dim) != (32, 3, 0):

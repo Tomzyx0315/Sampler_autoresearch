@@ -5,17 +5,24 @@
   "sigma_min": 0.002,
   "sigma_max": 80.0,
   "rho": 7.0,
+  "shared_root": "/data_fs/zhangyuxuan",
+  "dataset": {
+    "relative_path": "cifar10"
+  },
   "assets": {
     "network": {
       "filename": "edm-cifar10-32x32-uncond-vp.pkl",
+      "relative_path": "edm_ckpt/edm-cifar10-32x32-uncond-vp.pkl",
       "url": "https://nvlabs-fi-cdn.nvidia.com/edm/pretrained/edm-cifar10-32x32-uncond-vp.pkl"
     },
     "inception": {
       "filename": "inception-2015-12-05.pkl",
+      "relative_path": "cifar10fid/inception-2015-12-05.pkl",
       "url": "https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan3/versions/1/files/metrics/inception-2015-12-05.pkl"
     },
     "reference": {
       "filename": "cifar10-32x32.npz",
+      "relative_path": "cifar10fid/cifar10-32x32.npz",
       "url": "https://nvlabs-fi-cdn.nvidia.com/edm/fid-refs/cifar10-32x32.npz"
     }
   }
